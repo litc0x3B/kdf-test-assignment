@@ -5,6 +5,6 @@
 1. [Install .NET 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 2. Execute the following commands
    ```bash
-    cd LibraryManagment
-    dotnet run
+   cd LibraryManagment
+   dotnet run
    ```
