@@ -39,6 +39,10 @@ namespace LibraryManagment
             {
                 throw new ArgumentException($"No such book with ISBN '{isbn}'");
             }
+            if (book.BorrowedCount > 0)
+            {
+                throw new InvalidOperationException("Cannot remove book that is still borrowed");
+            }
             BooksByIsbn.Remove(book.Isbn);
             BooksByTitle[book.Title].Remove(book);
             BooksByAuthor[book.Author].Remove(book);
@@ -71,9 +75,9 @@ namespace LibraryManagment
             return books;
         }
 
-        public List<Book> GetBookList()
+        public IEnumerable<Book> GetBooks()
         {
-            return BooksByIsbn.Select(x => x.Value).ToList();
+            return BooksByIsbn.Select(x => x.Value);
         }
     }
 
@@ -153,9 +157,9 @@ namespace LibraryManagment
             }
         }
 
-        public List<BorrowingRecord> GetOverdues()
+        public IEnumerable<BorrowingRecord> GetOverdues()
         {
-            return sortedRecords.TakeWhile(x => x.ReturnDueDate < CurrentDate).ToList();
+            return sortedRecords.TakeWhile(x => x.ReturnDueDate < CurrentDate);
         }
     }
 

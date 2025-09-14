@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using LibraryManagment;
+//TODO: precompile regexes (i'm lazy)
 
 UserCollection users = new();
 BookCollection books = new();
@@ -150,7 +151,7 @@ while (true)
         if (Regex.IsMatch(line, @"^overdue$", RegexOptions.IgnoreCase))
         {
             var list = library.GetOverdues();
-            if (list.Count == 0)
+            if (list.Any())
             {
                 Console.WriteLine("Просрочек нет.");
             }
@@ -167,7 +168,7 @@ while (true)
         // --- list books
         if (Regex.IsMatch(line, @"^list\s+books$", RegexOptions.IgnoreCase))
         {
-            var list = books.GetBookList();
+            var list = books.GetBooks();
             PrintBooks(list);
             continue;
         }
@@ -175,7 +176,7 @@ while (true)
         // --- list users
         if (Regex.IsMatch(line, @"^list\s+users$", RegexOptions.IgnoreCase))
         {
-            var list = users.GetUserList();
+            var list = users.GetUsers();
             foreach (var u in list)
             {
                 Console.WriteLine($"{u.Name,-20} <{u.Email,-25}> | borrowed: {u.BorrowedBooks}/{u.MaxBooks} | max days: {u.MaxReturnDays}");

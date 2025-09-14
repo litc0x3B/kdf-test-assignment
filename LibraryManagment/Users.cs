@@ -22,9 +22,9 @@ namespace LibraryManagment
             return user;
         }
 
-        public List<User> GetUserList()
+        public IEnumerable<User> GetUsers()
         {
-            return userByEmail.Select(x => x.Value).ToList();
+            return userByEmail.Select(x => x.Value);
         }
     }
 
